@@ -200,6 +200,103 @@ class SingalLinkedList:
                 p=p.link
             end=p
 
+    def merg1(self,list2):
+        merge_lsit = SingalLinkedList()
+        merge_lsit.start=self._merg1(self.start,list2.start)
+        return merge_lsit
+
+    def _merg1(self,p1,p2):
+        if p1.info<=p2.info:
+            statM=Node(p1.info)
+            p1=p1.link
+        else:
+            statM=Node(p2.info)
+            p2=p2.link
+        pM=statM
+
+        while p1 is not None and p2 is not None:
+            if p1.info<=p1.info:
+                pM.link=Node(p1.info)
+                p1=p1.link
+            else:
+                pM.link=Node(p2.info)
+                p2=p2.link
+            pM=pM.link
+
+        # if second list has finished and elements left in the first list
+        while p1 is not None:
+            pM.link =Node(p1.info)
+            p1=p1.link
+            pM=pM.link
+
+        # if first list has finished and elments left in the second
+        while p2 is not None:
+            pM.link=Node(p2.info)
+            p2 = p2.link
+            pM=pM.link
+
+        return pM
+
+
+    '''
+    Merging two sorted lists by rearranging links
+    '''
+    def merg2(self,list2):
+        merge_list = SingalLinkedList()
+        merge_list._merg2(self.start,list2.start)
+
+        return merge_list
+
+    def _merg2(self,p1,p2):
+        if p1.info <=p2.info:
+            startM=p1.info
+            p1 = p1.link
+        else:
+            startM = p2.info
+            p2 = p2.link
+        pM = startM
+
+        while p1 is not None and p2 is not None:
+            if p1.info <= p2.info:
+                pM.link=p1
+                pM=pM.link
+                p1=p1.link
+
+            else:
+                pM.link = p2
+                pM=pM.link
+                p2=p2.link
+        if p1 is None:
+            pM.link =p2
+        else:
+            pM.link = p1
+        return startM
+
+    def merge_sort(self):
+        self.start =self._merge_sort_rec(self.start)
+
+    def _merge_sort_rec(self,list_start):
+        # if list is empty or has one element (base case)
+        if list_start is None or list_start.link is None:
+            return list_start
+
+        # if more than one element
+        start1=list_start
+        start2=self._divide_list(list_start)
+        start1=self._merge_sort_rec(start1)
+        start2=self._merge_sort_rec(start2)
+        startM=self._merg2((start1,start2))
+
+        return startM
+
+    def _divide_list(self,p):
+        q=p.link.link
+        while q is not None and q.link is not None:
+            p=p.link
+            q=q.link.link
+        start2=p.link
+        p.link=None
+        return start2
 
 
 
@@ -208,26 +305,54 @@ class SingalLinkedList:
 
 
 
-
-listt= SingalLinkedList()
-
-# print(listt.display_list())
-# print(listt.search(8))
-# print(listt.count_nodes())
-
-listt.create_list()
-listt.display_list()
-# listt.insert_at_end(-1)
-# listt.insert_in_beginning(0)
-# listt.search(-2)
-# listt.count_nodes()
+#
+# listt= SingalLinkedList()
+#
+# # print(listt.display_list())
+# # print(listt.search(8))
+# # print(listt.count_nodes())
+#
+# listt.create_list()
 # listt.display_list()
-# listt.insert_after()
-# listt.insert_after(-1,0)
-# listt.display_list()
-# listt.insert_before(3,5)
+# # listt.insert_at_end(-1)
+# # listt.insert_in_beginning(0)
+# # listt.search(-2)
+# # listt.count_nodes()
+# # listt.display_list()
+# # listt.insert_after()
+# # listt.insert_after(-1,0)
+# # listt.display_list()
+# # listt.insert_before(3,5)
+# # listt.display_list()
+#
+# listt.reverse_list()
+# print("revered List \n")
 # listt.display_list()
 
-listt.reverse_list()
-print("revered List \n")
-listt.display_list()
+""""
+Checking for megering list
+"""
+
+list1=SingalLinkedList()
+list2=SingalLinkedList()
+
+list1.create_list()
+list2.create_list()
+
+list1.bubble_sort_exdata()
+list2.bubble_sort_exdata()
+
+print("First List - "); list1.display_list()
+print("Second list - ");list2.display_list()
+
+list3=list1.merg1(list2)
+print("Merge with 1st method: ");list3.display_list()
+
+print("First List - "); list1.display_list()
+print("Second list - ");list2.display_list()
+
+list3=list1.merg2(list2)
+print("Merge with 2nd method: ");list3.display_list()
+print("First List - "); list1.display_list()
+print("Second list - ");list2.display_list()
+
