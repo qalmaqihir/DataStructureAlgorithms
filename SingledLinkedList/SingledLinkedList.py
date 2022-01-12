@@ -298,6 +298,79 @@ class SingalLinkedList:
         p.link=None
         return start2
 
+    def has_cycle(self):
+        if self.find_cycle() is None:
+            return False
+        else:
+            return True
+
+    def find_cycle(self):
+        if self.start is None or self.start.link is None:
+            return None
+        slowR = self.start
+        fastR = self.start
+
+        while fastR is not None and fastR.link is not None:
+            slowR=slowR.link
+            fastR=fastR.link.link
+
+            if slowR==fastR:
+                return slowR
+        return None
+
+
+    def remove_cyle(self):
+        c=self.find_cycle()
+        if c is None:
+            return
+        print("Node at which cycle is detected is ",c.info)
+
+        p=c
+        q=c
+        len_cycle=0
+
+        while True:
+            len_cycle+=1
+            q=q.link
+            if p==q:
+                break
+        print("lenght of cycle is : ", len_cycle)
+
+        len_rem_list =0
+        p=self.start
+
+        while p!=q:
+            len_rem_list+=1
+            p=p.link
+            q=q.link
+
+        print("Number of nodes not included in the cycle are : ", len_rem_list)
+        lenght_list = len_cycle+len_rem_list
+        print("Lenght of the list is : ", lenght_list)
+
+        p = self.start
+        for  i in range(lenght_list-1):
+            p=p.link
+        p.link = None
+
+    def insert_cycle(self,x):
+        if self.start is None:
+            return
+        p=self.start
+        px=None
+        prev=None
+
+        while p is not None:
+            if p.info==x:
+                px=p
+            prev=p
+            p=p.link
+        if px is not None:
+            prev.link = px
+        else:
+            print(x," Not present in list ")
+
+
 
 
 
