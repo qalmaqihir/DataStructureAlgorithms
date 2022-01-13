@@ -110,8 +110,6 @@ class DoubleLinkedList(object):
             p.prev=temp
 
 
-
-
     def insert_before_self(self, data,x):
         p= self.start
         while p is not None:
