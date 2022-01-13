@@ -125,6 +125,72 @@ class DoubleLinkedList(object):
             p = p.next
         print("given node : ", x, " is not in the list")
 
+    def delete_first_node(self):
+        if self.start is None:
+            return
+        if self.start.next is None:
+            self.start = None
+            return
+        self.start=self.start.next
+        self.start.prev=None
+
+    def delete_last_node(self):
+        if self.start is None:
+            return
+        if self.start.next is None:
+            self.start=None
+            return
+        p=self.start
+        while p.next !=None:
+            p=p.next
+        p.prev.next=None
+
+    def delete_node(self,x):
+        if self.start is None:
+            return
+        if self.start.next is None:
+            if self.start.info == x:
+                self.start=None
+            else:
+                print(x,' not present in the list')
+            return
+        # deletion of the first node
+        if self.start.info ==x:
+            self.start =self.start.next
+            self.start.prev= None
+            return
+
+        p = self.start
+        while p.next is not None:
+            if p.info ==x:
+                break
+            p=p.next
+        if p.next is not None:# node to be deleted is in between
+            p.prev.next=p.next
+            p.next.prev=None
+        else: # p refers to last node
+            if p.info==x:
+                p.prev.next=None
+            else:
+                print(x," Not present in the list")
+
+    def reverse_list(self):
+        if self.start is None:
+            return
+
+        p1=self.start
+        p2=p1.next
+        p1.next=None
+        p1.prev=p2
+
+        while p2 is not None:
+            p2.prev = p2.next
+            p2.next=p1
+            p1=p2
+            p2=p2.prev
+        self.start=p1
+
+
 
 
 
