@@ -71,5 +71,60 @@ def par_check(symbol_string):
 
 
 
-print(par_check("(()())"))# True
-print(par_check("(()())())(("))
+# print(par_check("(()())"))# True
+# print(par_check("(()())())(("))
+
+
+# A General Case for any symbol
+
+def par_checker_general(symbol_string):
+    s=Stack()
+    balanced=True
+    index=0
+    while index <len(symbol_string) and balanced:
+        symbol=symbol_string[index]
+
+        if symbol in "({[":
+            s.push(symbol)
+        else:
+            if s.is_empty():
+                balanced=False
+            else:
+                top=s.pop()
+                if not matches(top,symbol):
+                    balanced=False
+        index+=1
+    if balanced and s.is_empty():
+        return  True
+    else:
+        return False
+
+def matches(open, close):
+    open="({["
+    close=")}]"
+    return open.index(open)==close.index(close)
+
+#
+# print(par_checker_general("{{([][])}()}"))
+# print(par_checker_general("{}{{()()[][]]}}"))
+
+
+def base_conversion(dec_num,base):
+    digits='0123456789ABCDEF'
+    rem_stack=Stack()
+
+    while dec_num>0:
+        rem = dec_num%base
+        rem_stack.push(rem)
+        dec_num=dec_num//base
+
+    new_string=""
+    while not rem_stack.is_empty():
+        new_string=new_string + digits[rem_stack.pop()]
+
+    return new_string
+
+print(base_conversion(25,2))
+print(base_conversion(25,8))
+print(base_conversion(25,16))
+
