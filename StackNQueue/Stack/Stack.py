@@ -31,16 +31,45 @@ class Stack:
 
 
 
-our_stack=Stack()
-print(our_stack.is_empty())
-# our_stack.peek()
-our_stack.push(2)
-our_stack.push(3)
-print(our_stack.peek())
-our_stack.push(4)
-our_stack.push(5)
-our_stack.display()
-our_stack.pop()
-print(our_stack.peek())
-our_stack.display()
-print(our_stack.is_empty())
+# our_stack=Stack()
+# print(our_stack.is_empty())
+# # our_stack.peek()
+# our_stack.push(2)
+# our_stack.push(3)
+# print(our_stack.peek())
+# our_stack.push(4)
+# our_stack.push(5)
+# our_stack.display()
+# our_stack.pop()
+# print(our_stack.peek())
+# our_stack.display()
+# print(our_stack.is_empty())
+
+
+
+
+def par_check(symbol_string):
+    s=Stack()
+    balanced=True
+    index=0
+
+    while index<len(symbol_string) and balanced:
+        symbol=symbol_string[index]
+        if  symbol=="(":
+            s.push(symbol)
+        else:
+            if s.is_empty():
+                balanced=False
+            else:
+                s.pop()
+        index+=1
+
+    if balanced and s.is_empty():
+        return True
+    else:
+        return False
+
+
+
+print(par_check("(()())"))# True
+print(par_check("(()())())(("))
